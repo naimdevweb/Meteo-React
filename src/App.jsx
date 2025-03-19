@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Header from './components/Header/Header'
 import WeatherCard from './components/WeatherCard/WeatherCard'
 import "./App.css"
+import Search from './Search/Search';
 
 function App() {
   const [selectedDay, setSelectedDay] = useState(0); // 0 = Aujourd'hui
@@ -11,6 +12,7 @@ function App() {
       <div className='App'>
         <Header />
         <div className='row'>
+      <Search />
           <div className='col s12 m6 push-m3'>
             <WeatherCard 
               selectedDay={selectedDay} 

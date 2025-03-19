@@ -68,7 +68,7 @@ function WeatherCard({ selectedDay = 0, onDateSelect }) {
             icon={displayData.icon}
           />
           {/* Transmission de onDateSelect au composant Days */}
-          <Days onDateSelect={onDateSelect} />
+          <Days onDateSelect={onDateSelect} forecastData={weatherData} />
         </>
       )}
     </div>
