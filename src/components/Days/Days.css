@@ -1,0 +1,65 @@
+.card-action a{
+    font-weight: bold;
+}
+
+.date-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px 10px;
+    background: linear-gradient(145deg, #121212, #202020);
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    margin-top: 0;
+  }
+  
+  .date-button {
+    color: #f0f0f0;
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    padding: 12px 18px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    outline: none;
+    min-width: 100px;
+    text-align: center;
+  }
+  
+  .date-button:hover {
+    background-color: rgba(97, 218, 251, 0.2);
+    color: #61dafb;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .date-button:active,
+  .date-button.active {
+    background-color: rgba(97, 218, 251, 0.3);
+    color: #61dafb;
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .date-button:first-child {
+    background-color: rgba(97, 218, 251, 0.2);
+    color: #61dafb;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(97, 218, 251, 0.3);
+  }
+  
+  /* Style responsive */
+  @media (max-width: 600px) {
+    .date-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .date-button {
+      width: 90%;
+      margin: 4px 0;
+    }
+  }
