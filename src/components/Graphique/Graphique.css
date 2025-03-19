@@ -1,0 +1,46 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.hourly-chart-container {
+    background: rgba(11, 8, 41, 0.6);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1s ease-in-out;
+}
+
+.chart-title {
+    color: white;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 500;
+    animation: slideIn 1s ease-in-out;
+}
+
+.loading-chart {
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    animation: fadeIn 1s ease-in-out;
+}

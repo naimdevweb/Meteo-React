@@ -1,65 +1,186 @@
-.card-action a{
-    font-weight: bold;
+/* Animations */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 4px 12px rgba(97, 218, 251, 0.3); }
+  50% { transform: scale(1.05); box-shadow: 0 8px 20px rgba(97, 218, 251, 0.5); }
+  100% { transform: scale(1); box-shadow: 0 4px 12px rgba(97, 218, 251, 0.3); }
+}
+
+@keyframes glowText {
+  0% { text-shadow: 0 0 5px rgba(97, 218, 251, 0.5); }
+  50% { text-shadow: 0 0 15px rgba(97, 218, 251, 0.8), 0 0 25px rgba(97, 218, 251, 0.5); }
+  100% { text-shadow: 0 0 5px rgba(97, 218, 251, 0.5); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Conteneur principal avec effet glassmorphism */
+.card-action {
+  background: rgba(10, 10, 30, 0.7) !important;
+  backdrop-filter: blur(10px) !important;
+  border-radius: 0 0 16px 16px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+  animation: fadeIn 0.8s ease-out forwards;
 }
 
 .date-buttons {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 25px 15px;
+  transition: all 0.5s ease;
+}
+
+/* Boutons élégants avec effets 3D */
+.date-button {
+  color: #f0f0f0;
+  background: linear-gradient(145deg, rgba(30, 30, 60, 0.4), rgba(15, 15, 35, 0.6));
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  outline: none;
+  min-width: 120px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  animation: fadeIn 0.5s ease-out forwards;
+  animation-delay: calc(var(--day-index, 0) * 0.1s);
+}
+
+/* Effet de brillance en arrière-plan */
+.date-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.2), 
+    transparent
+  );
+  transition: all 0.5s ease;
+  z-index: 1;
+  opacity: 0;
+}
+
+/* Effet d'interaction hover */
+.date-button:hover {
+  transform: translateY(-8px) scale(1.05);
+  color: #61dafb;
+  background: linear-gradient(145deg, rgba(40, 40, 80, 0.6), rgba(25, 25, 60, 0.8));
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 
+              0 6px 12px rgba(97, 218, 251, 0.3),
+              inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(97, 218, 251, 0.3);
+}
+
+.date-button:hover::before {
+  left: 100%;
+  opacity: 1;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Effet du jour actif */
+.date-button:active,
+.date-button.active {
+  background: linear-gradient(145deg, rgba(97, 218, 251, 0.2), rgba(60, 180, 220, 0.3));
+  color: #61dafb;
+  transform: translateY(1px) scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2),
+              0 0 15px rgba(97, 218, 251, 0.4),
+              inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(97, 218, 251, 0.4);
+  animation: glowText 2s infinite;
+}
+
+/* Bouton aujourd'hui */
+.date-button:first-child {
+  background: linear-gradient(145deg, rgba(40, 80, 120, 0.5), rgba(97, 218, 251, 0.3));
+  color: #61dafb;
+  font-weight: 600;
+  box-shadow: 0 5px 15px rgba(97, 218, 251, 0.3),
+              inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(97, 218, 251, 0.4);
+  animation: pulse 3s infinite;
+}
+
+/* Effet de chargement en cascade */
+.date-button:nth-child(1) { --day-index: 0; }
+.date-button:nth-child(2) { --day-index: 1; }
+.date-button:nth-child(3) { --day-index: 2; }
+.date-button:nth-child(4) { --day-index: 3; }
+.date-button:nth-child(5) { --day-index: 4; }
+
+/* Contenu des boutons */
+.date-button span {
+  position: relative;
+  z-index: 2;
+  display: block;
+}
+
+.date-button .day-temp {
+  display: block;
+  margin-top: 6px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+}
+
+.date-button:hover .day-temp,
+.date-button.active .day-temp,
+.date-button:first-child .day-temp {
+  color: #61dafb;
+}
+
+/* Style responsive */
+@media (max-width: 768px) {
+  .date-buttons {
     padding: 15px 10px;
-    background: linear-gradient(145deg, #121212, #202020);
-    border-radius: 0 0 12px 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    margin-top: 0;
+    gap: 8px;
   }
   
   .date-button {
-    color: #f0f0f0;
-    background: rgba(255, 255, 255, 0.05);
-    border: none;
-    padding: 12px 18px;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    outline: none;
     min-width: 100px;
-    text-align: center;
+    padding: 12px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .date-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .date-button {
+    width: 90%;
+    margin: 4px 0;
+    animation-delay: calc(var(--day-index, 0) * 0.05s);
   }
   
-  .date-button:hover {
-    background-color: rgba(97, 218, 251, 0.2);
-    color: #61dafb;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  .date-button .day-temp {
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 0;
   }
-  
-  .date-button:active,
-  .date-button.active {
-    background-color: rgba(97, 218, 251, 0.3);
-    color: #61dafb;
-    transform: translateY(1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  }
-  
-  .date-button:first-child {
-    background-color: rgba(97, 218, 251, 0.2);
-    color: #61dafb;
-    font-weight: bold;
-    box-shadow: 0 2px 5px rgba(97, 218, 251, 0.3);
-  }
-  
-  /* Style responsive */
-  @media (max-width: 600px) {
-    .date-buttons {
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    .date-button {
-      width: 90%;
-      margin: 4px 0;
-    }
-  }
+}

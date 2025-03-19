@@ -8,7 +8,6 @@ function CitySearch({ onCityChange }) {
     e.preventDefault();
     if (inputValue.trim()) {
       onCityChange(inputValue.trim());
-      // Optionnel: réinitialiser l'input ou le garder avec la valeur actuelle
       setInputValue('');
     }
   };

@@ -3,23 +3,26 @@ import './WeatherCard.css'
 import Weather from '../Weather/Weather'
 import Days from '../Days/Days'
 import Search from '../Search/Search'
+import Graphique from '../Graphique/Graphique'
 
-// Ajout de onDateSelect dans les props
-function WeatherCard({ selectedDay = 0, onDateSelect }) {
+// Ajout des props city et onCityChange
+function WeatherCard({ selectedDay = 0, onDateSelect, city = 'Lyon', onCityChange }) {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [city, setCity] = useState('Lyon');
 
+  // Gestionnaire de changement de ville
   const handleCityChange = (newCity) => {
-    setCity(newCity);
-    setLoading(true); // Réactiver l'état de chargement
+    // Notifier le composant parent (App) du changement
+    if (onCityChange) {
+      onCityChange(newCity);
+    }
   };
   
   useEffect(() => {
     const fetchWeatherData = async () => {
+      setLoading(true);
       try {
-        // Notez le changement d'URL : forecast.json au lieu de current.json et &days=5
         const response = await fetch(
            `https://api.weatherapi.com/v1/forecast.json?key=${import.meta.env.VITE_WEATHER_API_KEY}&q=${city}&days=5&aqi=no&alerts=no`
         );
@@ -38,12 +41,12 @@ function WeatherCard({ selectedDay = 0, onDateSelect }) {
     };
     
     fetchWeatherData();
-  }, [city]);
+  }, [city]); // Utiliser city en dépendance pour recharger quand la ville change
 
   if (loading) return <div className="weather card blue-grey darken-1"><div className="card-content white-text">Chargement...</div></div>;
   if (error) return <div className="weather card blue-grey darken-1"><div className="card-content white-text">Erreur: {error}</div></div>;
 
-  // Données actuelles (aujourd'hui) ou prévisions pour un jour spécifique
+  // Données actuelles ou prévisions pour un jour spécifique
   const displayData = selectedDay === 0 
     ? {
         city: weatherData.location.name,
@@ -59,32 +62,38 @@ function WeatherCard({ selectedDay = 0, onDateSelect }) {
         temperature: weatherData.forecast.forecastday[selectedDay-1].day.avgtemp_c,
         wind: {
           speed: weatherData.forecast.forecastday[selectedDay-1].day.maxwind_kph,
-          direction: 0 // Les données de direction peuvent ne pas être disponibles dans les prévisions
+          direction: 0
         },
         icon: weatherData.forecast.forecastday[selectedDay-1].day.condition.icon
       };
 
-     
-
   return (
     <div className="weather card blue-grey darken-1">
-       <div className="card-content white-text search-area">
+      <div className="card-content white-text search-area">
         <Search onCityChange={handleCityChange} />
       </div>
       {weatherData && (
         <>
-      
-     
-
-          <Weather 
-            city={displayData.city}
-            temperature={displayData.temperature}
-            wind={displayData.wind}
-            icon={displayData.icon}
-          />
-
+        <section className='weather-card'>
+          {/* <h3 className="weather-title">Météo à {displayData.city}</h3> */}
+          <div className="weather-layout">
+            <div className="weather-info">
+              <Weather 
+                city={displayData.city}
+                temperature={displayData.temperature}
+                wind={displayData.wind}
+                icon={displayData.icon}
+              />
+            </div>
+            
+          </div>
+            <div className="hourly-chart-container">
+              <Graphique
+                hourlyData={weatherData.forecast.forecastday[selectedDay].hour} 
+              />
+            </div>
+            </section>
           
-          {/* Transmission de onDateSelect au composant Days */}
           <Days onDateSelect={onDateSelect} forecastData={weatherData} />
         </>
       )}
