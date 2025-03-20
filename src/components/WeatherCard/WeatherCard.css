@@ -1,3 +1,15 @@
 .weather.card {
-    margin-top:4vh;
+    margin-top: 4vh;
+}
+
+@media (max-width: 768px) {
+    .weather.card {
+        margin-top: 2vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .weather.card {
+        margin-top: 1vh;
+    }
 }

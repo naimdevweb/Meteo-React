@@ -13,3 +13,25 @@
     font-size: calc(10px + 2vmin);
     color: white;
 }
+
+/* Media query for screens smaller than 600px */
+@media (max-width: 600px) {
+    .App-logo {
+        height: 70px;
+    }
+
+    .App-header {
+        font-size: calc(8px + 2vmin);
+    }
+}
+
+/* Media query for screens larger than 1200px */
+@media (min-width: 1200px) {
+    .App-logo {
+        height: 120px;
+    }
+
+    .App-header {
+        font-size: calc(12px + 2vmin);
+    }
+}

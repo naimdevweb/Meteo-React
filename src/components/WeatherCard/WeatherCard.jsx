@@ -82,7 +82,11 @@ function WeatherCard({ selectedDay = 0, onDateSelect, city = 'Lyon', onCityChang
           speed: weatherData.current.wind_kph,
           direction: weatherData.current.wind_degree
         },
-        icon: weatherData.current.condition.icon
+        icon: weatherData.current.condition.icon,
+        sun:{
+          sunrise: weatherData.forecast.forecastday[selectedDay].astro.sunrise,
+          sunset: weatherData.forecast.forecastday[selectedDay].astro.sunset
+        }
       }
     : {
         city: weatherData.location.name,
@@ -91,7 +95,11 @@ function WeatherCard({ selectedDay = 0, onDateSelect, city = 'Lyon', onCityChang
           speed: weatherData.forecast.forecastday[selectedDay-1].day.maxwind_kph,
           direction: 0
         },
-        icon: weatherData.forecast.forecastday[selectedDay-1].day.condition.icon
+        icon: weatherData.forecast.forecastday[selectedDay-1].day.condition.icon,
+        sun:{
+          sunrise: weatherData.forecast.forecastday[selectedDay-1].astro.sunrise,
+          sunset: weatherData.forecast.forecastday[selectedDay-1].astro.sunset
+        }
       };
 
   return (
@@ -108,6 +116,7 @@ function WeatherCard({ selectedDay = 0, onDateSelect, city = 'Lyon', onCityChang
                 temperature={displayData.temperature}
                 wind={displayData.wind}
                 icon={displayData.icon}
+                sun={displayData.sun}
               />
             </div>
             

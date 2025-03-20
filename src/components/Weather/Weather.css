@@ -16,19 +16,30 @@
     }
 }
 
+@keyframes shine {
+    from { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+    to { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 200, 0, 0.6); }
+}
+
 .weather.card {
     margin-top: 4vh;
     animation: fadeIn 1s ease-in-out;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .weather.card .card-content {
     background: #0b0829;
     animation: slideIn 1s ease-in-out;
+    padding: 20px;
 }
 
 .weather.card .card-action {
     background: #120944;
     animation: slideIn 1s ease-in-out;
+    padding: 10px;
+    text-align: center;
 }
 
 .weather .temperature {
@@ -111,10 +122,129 @@
     animation: slideIn 0.5s ease-in-out;
 }
 
-.Titre{
+.Titre {
     font-size: 2rem;
     color: white;
     text-align: center;
     margin-top: 2vh;
     animation: fadeIn 1s ease-in-out;
+}
+
+/* Ajouter ce nouveau CSS pour les informations solaires */
+
+/* Ajustement pour les labels "Lever" et "Coucher" */
+.sun-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 5px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.sunrise, .sunset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.sun-icon {
+    font-size: 2.2rem;
+    margin-bottom: 5px;
+    animation: shine 2s infinite alternate;
+}
+
+.sun-time {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+}
+
+.sun-info {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    animation: fadeIn 1s ease;
+}
+
+.sunrise .sun-icon {
+    color: #ffdd57;
+}
+
+.sunset .sun-icon {
+    color: #ff9e7d;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .weather .temperature {
+        font-size: 80px;
+        margin-left: 2vh;
+    }
+
+    .city-name {
+        font-size: 1rem;
+    }
+
+    .remove-city-btn {
+        font-size: 1.5rem;
+    }
+
+    .Titre {
+        font-size: 1.5rem;
+    }
+
+    .sun-label {
+        font-size: 0.8rem;
+    }
+
+    .sun-icon {
+        font-size: 1.5rem;
+    }
+
+    .sun-time {
+        font-size: 1rem;
+    }
+
+    .sun-info {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .weather .temperature {
+        font-size: 60px;
+        margin-left: 1vh;
+    }
+
+    .city-name {
+        font-size: 0.9rem;
+    }
+
+    .remove-city-btn {
+        font-size: 1.2rem;
+    }
+
+    .Titre {
+        font-size: 1.2rem;
+    }
+
+    .sun-label {
+        font-size: 0.7rem;
+    }
+
+    .sun-icon {
+        font-size: 1.2rem;
+    }
+
+    .sun-time {
+        font-size: 0.9rem;
+    }
 }

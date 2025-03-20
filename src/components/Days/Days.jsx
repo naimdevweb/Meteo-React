@@ -8,7 +8,14 @@ function Days({ onDateSelect, forecastData }) {
     setActiveDay(day);
     onDateSelect(day);
   }
-  
+
+  const displayData = activeDay === 0 
+    ? {
+        icon: forecastData.current.condition.icon
+      }
+    : {
+        icon: forecastData.forecast.forecastday[activeDay].day.condition.icon
+      };
   // Fonction pour formater la date en jour de la semaine en français
   const formatDate = (dateString) => {
     const options = { weekday: 'long' };
@@ -28,13 +35,19 @@ function Days({ onDateSelect, forecastData }) {
     <>
       <div className="date-buttons">
         {forecastData.forecast.forecastday.map((day, index) => (
-          <button
-            key={day.date}
-            className={`date-button ${activeDay === index ? 'active' : ''}`}
-            onClick={() => handleDateClick(index)}
-          >
-            {index === 0 ? "Aujourd'hui" : formatDate(day.date).charAt(0).toUpperCase() + formatDate(day.date).slice(1)}
-          </button>
+          <div key={day.date} className="date-button-container">
+            <button
+              className={`date-button ${activeDay === index ? 'active' : ''}`}
+              onClick={() => handleDateClick(index)}
+            >
+              {index === 0 ? "Aujourd'hui" : formatDate(day.date).charAt(0).toUpperCase() + formatDate(day.date).slice(1)}
+            </button>
+            {activeDay === index && (
+              <div className="icon-display">
+                <img src={displayData.icon} alt="Weather icon" />
+              </div>
+            )}
+          </div>
         ))}
       </div>
     </>

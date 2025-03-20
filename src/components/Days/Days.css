@@ -184,3 +184,20 @@
     margin-top: 0;
   }
 }
+
+@media (max-width: 480px) {
+  .date-buttons {
+    padding: 10px 5px;
+    gap: 5px;
+  }
+
+  .date-button {
+    min-width: 80px;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+
+  .date-button .day-temp {
+    font-size: 1rem;
+  }
+}

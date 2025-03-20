@@ -44,3 +44,36 @@
     font-size: 1.2rem;
     animation: fadeIn 1s ease-in-out;
 }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .hourly-chart-container {
+        padding: 15px;
+        margin: 15px 0;
+    }
+
+    .chart-title {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+
+    .loading-chart {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hourly-chart-container {
+        padding: 10px;
+        margin: 10px 0;
+    }
+
+    .chart-title {
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+
+    .loading-chart {
+        font-size: 0.9rem;
+    }
+}

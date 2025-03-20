@@ -1,5 +1,6 @@
 .search {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 20px auto;
@@ -17,6 +18,7 @@
   color: white;
   font-size: 16px;
   outline: none;
+  width: 100%;
 }
 
 .search input::placeholder {
@@ -27,14 +29,27 @@
   background: #61dafb;
   border: none;
   border-radius: 25px;
-  margin-left: 10px;
+  margin-top: 10px;
   padding: 12px 20px;
   color: #fff;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
+  width: 100%;
 }
 
 .search-button:hover {
   background: #21a1f1;
+}
+
+@media (min-width: 600px) {
+  .search {
+    flex-direction: row;
+  }
+
+  .search-button {
+    margin-top: 0;
+    margin-left: 10px;
+    width: auto;
+  }
 }

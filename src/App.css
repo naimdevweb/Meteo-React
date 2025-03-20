@@ -1,10 +1,31 @@
 .App {
-    text-align: center;
-  }
+  text-align: center;
+}
 
-  /* Style pour le bouton désactivé */
+/* Style pour le bouton désactivé */
 .remove-city-btn.disabled {
   opacity: 0.3;
   cursor: not-allowed;
   pointer-events: none;
+}
+
+/* Media queries pour le responsive design */
+@media (max-width: 768px) {
+  .App {
+    text-align: left;
+  }
+
+  .remove-city-btn.disabled {
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 480px) {
+  .App {
+    text-align: right;
+  }
+
+  .remove-city-btn.disabled {
+    opacity: 0.7;
+  }
 }
