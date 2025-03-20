@@ -58,10 +58,7 @@ function App() {
     // Empêcher la propagation de l'événement vers le parent (li)
     event.stopPropagation();
     
-    // Ne pas supprimer la dernière ville
-    if (cities.length <= 1) {
-      return;
-    }
+    
     
     // Filtrer la ville à supprimer
     const newCities = cities.filter(city => city !== cityToRemove);
