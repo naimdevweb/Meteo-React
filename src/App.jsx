@@ -90,22 +90,23 @@ function App() {
             <div className="cities-sidebar">
               <h4 className='Titre'>Villes recherchées</h4>
               <ul className="city-list">
-                {cities.map(city => (
-                  <li 
-                    key={city} 
-                    className={city === currentCity ? 'active' : ''}
-                    onClick={() => selectCity(city)}
-                  >
-                    <span className="city-name">{city}</span>
-                    <button 
-                      className="remove-city-btn" 
-                      onClick={(e) => removeCity(city, e)}
-                      aria-label={`Supprimer ${city}`}
-                    >
-                      ×
-                    </button>
-                  </li>
-                ))}
+              {cities.map(city => (
+  <li 
+    key={city} 
+    className={city === currentCity ? 'active' : ''}
+    onClick={() => selectCity(city)}
+  >
+    <span className="city-name">{city}</span>
+    <button 
+      className={`remove-city-btn ${cities.length <= 1 ? 'disabled' : ''}`}
+      onClick={(e) => removeCity(city, e)}
+      aria-label={`Supprimer ${city}`}
+      disabled={cities.length <= 1}
+    >
+      ×
+    </button>
+  </li>
+))}
               </ul>
             </div>
           </div>

@@ -2,4 +2,9 @@
     text-align: center;
   }
 
-  
+  /* Style pour le bouton désactivé */
+.remove-city-btn.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}

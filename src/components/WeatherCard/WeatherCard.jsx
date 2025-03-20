@@ -23,18 +23,24 @@ function WeatherCard({ selectedDay = 0, onDateSelect, city = 'Lyon', onCityChang
     const fetchWeatherData = async () => {
       setLoading(true);
       try {
+        // Utilisez une clé API de secours si la variable d'environnement n'est pas définie
+        const apiKey = import.meta.env.VITE_WEATHER_API_KEY || '9b311b62a2a849848b481803251903';
+        
         const response = await fetch(
-           `https://api.weatherapi.com/v1/forecast.json?key=${import.meta.env.VITE_WEATHER_API_KEY}&q=${city}&days=5&aqi=no&alerts=no`
+          `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${encodeURIComponent(city)}&days=5&aqi=no&alerts=no`
         );
         
         if (!response.ok) {
-          throw new Error('Données météo non disponibles');
+          const errorData = await response.json();
+          throw new Error(errorData.error?.message || 'Données météo non disponibles');
         }
         
         const data = await response.json();
         setWeatherData(data);
         setLoading(false);
+        setError(null); // Réinitialiser l'erreur si la requête réussit
       } catch (err) {
+        console.error("Erreur API météo:", err);
         setError('Erreur lors du chargement des données: ' + err.message);
         setLoading(false);
       }
@@ -43,10 +49,31 @@ function WeatherCard({ selectedDay = 0, onDateSelect, city = 'Lyon', onCityChang
     fetchWeatherData();
   }, [city]); // Utiliser city en dépendance pour recharger quand la ville change
 
-  if (loading) return <div className="weather card blue-grey darken-1"><div className="card-content white-text">Chargement...</div></div>;
-  if (error) return <div className="weather card blue-grey darken-1"><div className="card-content white-text">Erreur: {error}</div></div>;
+  // Modifier le comportement lors du chargement
+  if (loading) return (
+    <div className="weather card blue-grey darken-1">
+      <div className="card-content white-text loading-container">
+        <div className="loading-spinner"></div>
+        <p>Chargement des données météo...</p>
+      </div>
+    </div>
+  );
 
-  // Données actuelles ou prévisions pour un jour spécifique
+  // Amélioration de l'affichage d'erreur
+  if (error) return (
+    <div className="weather card blue-grey darken-1">
+      <div className="card-content white-text error-container">
+        <div className="error-icon">⚠️</div>
+        <p>{error}</p>
+        <p className="error-tip">Vérifiez le nom de la ville ou votre connexion internet</p>
+        <div className="error-search">
+          <Search onCityChange={handleCityChange} />
+        </div>
+      </div>
+    </div>
+  );
+
+  // Reste du code inchangé...
   const displayData = selectedDay === 0 
     ? {
         city: weatherData.location.name,
@@ -74,8 +101,6 @@ function WeatherCard({ selectedDay = 0, onDateSelect, city = 'Lyon', onCityChang
       </div>
       {weatherData && (
         <>
-        <section className='weather-card'>
-          {/* <h3 className="weather-title">Météo à {displayData.city}</h3> */}
           <div className="weather-layout">
             <div className="weather-info">
               <Weather 
@@ -86,13 +111,12 @@ function WeatherCard({ selectedDay = 0, onDateSelect, city = 'Lyon', onCityChang
               />
             </div>
             
-          </div>
             <div className="hourly-chart-container">
               <Graphique
                 hourlyData={weatherData.forecast.forecastday[selectedDay].hour} 
               />
             </div>
-            </section>
+          </div>
           
           <Days onDateSelect={onDateSelect} forecastData={weatherData} />
         </>
